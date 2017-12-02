@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyui.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.easyui.pojo.User">
+    <id column="EU_USER_ID" jdbcType="VARCHAR" property="EU_USER_ID" />
+    <result column="EU_USER_NAME" jdbcType="VARCHAR" property="EU_USER_NAME" />
+    <result column="EU_PASSWORD" jdbcType="VARCHAR" property="EU_PASSWORD" />
+    <result column="EU_SEX" jdbcType="VARCHAR" property="EU_SEX" />
+    <result column="EU_BIRTHDAY" jdbcType="DATE" property="EU_BIRTHDAY" />
+    <result column="EU_IDENTITY_CODE" jdbcType="VARCHAR" property="EU_IDENTITY_CODE" />
+    <result column="EU_EMAIL" jdbcType="VARCHAR" property="EU_EMAIL" />
+    <result column="EU_MOBILE" jdbcType="VARCHAR" property="EU_MOBILE" />
+    <result column="EU_ADDRESS" jdbcType="VARCHAR" property="EU_ADDRESS" />
+    <result column="EU_STATUS" jdbcType="INTEGER" property="EU_STATUS" />
+    <result column="EU_DELETE_STATUS" jdbcType="INTEGER" property="EU_DELETE_STATUS" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EU_USER_ID, EU_USER_NAME, EU_PASSWORD, EU_SEX, EU_BIRTHDAY, EU_IDENTITY_CODE, EU_EMAIL, 
+    EU_MOBILE, EU_ADDRESS, EU_STATUS, EU_DELETE_STATUS
+  </sql>
+  <select id="selectByExample" parameterType="com.easyui.pojo.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from easybuy_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from easybuy_user
+    where EU_USER_ID = #{EU_USER_ID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from easybuy_user
+    where EU_USER_ID = #{EU_USER_ID,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.easyui.pojo.UserExample">
+    delete from easybuy_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="EU_USER_ID" keyProperty="EU_USER_ID" parameterType="com.easyui.pojo.User" useGeneratedKeys="true">
+    insert into easybuy_user (EU_USER_ID,EU_USER_NAME, EU_PASSWORD, EU_SEX, 
+      EU_BIRTHDAY, EU_IDENTITY_CODE, EU_EMAIL, 
+      EU_MOBILE, EU_ADDRESS, EU_STATUS, 
+      EU_DELETE_STATUS)
+    values (#{EU_USER_ID,jdbcType=VARCHAR},#{EU_USER_NAME,jdbcType=VARCHAR}, #{EU_PASSWORD,jdbcType=VARCHAR}, #{EU_SEX,jdbcType=VARCHAR}, 
+      #{EU_BIRTHDAY,jdbcType=DATE}, #{EU_IDENTITY_CODE,jdbcType=VARCHAR}, #{EU_EMAIL,jdbcType=VARCHAR}, 
+      #{EU_MOBILE,jdbcType=VARCHAR}, #{EU_ADDRESS,jdbcType=VARCHAR}, #{EU_STATUS,jdbcType=INTEGER}, 
+      #{EU_DELETE_STATUS,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="EU_USER_ID" keyProperty="EU_USER_ID" parameterType="com.easyui.pojo.User" useGeneratedKeys="true">
+    insert into easybuy_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="EU_USER_NAME != null">
+        EU_USER_NAME,
+      </if>
+      <if test="EU_PASSWORD != null">
+        EU_PASSWORD,
+      </if>
+      <if test="EU_SEX != null">
+        EU_SEX,
+      </if>
+      <if test="EU_BIRTHDAY != null">
+        EU_BIRTHDAY,
+      </if>
+      <if test="EU_IDENTITY_CODE != null">
+        EU_IDENTITY_CODE,
+      </if>
+      <if test="EU_EMAIL != null">
+        EU_EMAIL,
+      </if>
+      <if test="EU_MOBILE != null">
+        EU_MOBILE,
+      </if>
+      <if test="EU_ADDRESS != null">
+        EU_ADDRESS,
+      </if>
+      <if test="EU_STATUS != null">
+        EU_STATUS,
+      </if>
+      <if test="EU_DELETE_STATUS != null">
+        EU_DELETE_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="EU_USER_NAME != null">
+        #{EU_USER_NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_PASSWORD != null">
+        #{EU_PASSWORD,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_SEX != null">
+        #{EU_SEX,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_BIRTHDAY != null">
+        #{EU_BIRTHDAY,jdbcType=DATE},
+      </if>
+      <if test="EU_IDENTITY_CODE != null">
+        #{EU_IDENTITY_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_EMAIL != null">
+        #{EU_EMAIL,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_MOBILE != null">
+        #{EU_MOBILE,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_ADDRESS != null">
+        #{EU_ADDRESS,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_STATUS != null">
+        #{EU_STATUS,jdbcType=INTEGER},
+      </if>
+      <if test="EU_DELETE_STATUS != null">
+        #{EU_DELETE_STATUS,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.easyui.pojo.UserExample" resultType="java.lang.Long">
+    select count(*) from easybuy_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update easybuy_user
+    <set>
+      <if test="record.EU_USER_ID != null">
+        EU_USER_ID = #{record.EU_USER_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_USER_NAME != null">
+        EU_USER_NAME = #{record.EU_USER_NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_PASSWORD != null">
+        EU_PASSWORD = #{record.EU_PASSWORD,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_SEX != null">
+        EU_SEX = #{record.EU_SEX,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_BIRTHDAY != null">
+        EU_BIRTHDAY = #{record.EU_BIRTHDAY,jdbcType=DATE},
+      </if>
+      <if test="record.EU_IDENTITY_CODE != null">
+        EU_IDENTITY_CODE = #{record.EU_IDENTITY_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_EMAIL != null">
+        EU_EMAIL = #{record.EU_EMAIL,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_MOBILE != null">
+        EU_MOBILE = #{record.EU_MOBILE,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_ADDRESS != null">
+        EU_ADDRESS = #{record.EU_ADDRESS,jdbcType=VARCHAR},
+      </if>
+      <if test="record.EU_STATUS != null">
+        EU_STATUS = #{record.EU_STATUS,jdbcType=INTEGER},
+      </if>
+      <if test="record.EU_DELETE_STATUS != null">
+        EU_DELETE_STATUS = #{record.EU_DELETE_STATUS,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update easybuy_user
+    set EU_USER_ID = #{record.EU_USER_ID,jdbcType=VARCHAR},
+      EU_USER_NAME = #{record.EU_USER_NAME,jdbcType=VARCHAR},
+      EU_PASSWORD = #{record.EU_PASSWORD,jdbcType=VARCHAR},
+      EU_SEX = #{record.EU_SEX,jdbcType=VARCHAR},
+      EU_BIRTHDAY = #{record.EU_BIRTHDAY,jdbcType=DATE},
+      EU_IDENTITY_CODE = #{record.EU_IDENTITY_CODE,jdbcType=VARCHAR},
+      EU_EMAIL = #{record.EU_EMAIL,jdbcType=VARCHAR},
+      EU_MOBILE = #{record.EU_MOBILE,jdbcType=VARCHAR},
+      EU_ADDRESS = #{record.EU_ADDRESS,jdbcType=VARCHAR},
+      EU_STATUS = #{record.EU_STATUS,jdbcType=INTEGER},
+      EU_DELETE_STATUS = #{record.EU_DELETE_STATUS,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.easyui.pojo.User">
+    update easybuy_user
+    <set>
+      <if test="EU_USER_NAME != null">
+        EU_USER_NAME = #{EU_USER_NAME,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_PASSWORD != null">
+        EU_PASSWORD = #{EU_PASSWORD,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_SEX != null">
+        EU_SEX = #{EU_SEX,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_BIRTHDAY != null">
+        EU_BIRTHDAY = #{EU_BIRTHDAY,jdbcType=DATE},
+      </if>
+      <if test="EU_IDENTITY_CODE != null">
+        EU_IDENTITY_CODE = #{EU_IDENTITY_CODE,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_EMAIL != null">
+        EU_EMAIL = #{EU_EMAIL,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_MOBILE != null">
+        EU_MOBILE = #{EU_MOBILE,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_ADDRESS != null">
+        EU_ADDRESS = #{EU_ADDRESS,jdbcType=VARCHAR},
+      </if>
+      <if test="EU_STATUS != null">
+        EU_STATUS = #{EU_STATUS,jdbcType=INTEGER},
+      </if>
+      <if test="EU_DELETE_STATUS != null">
+        EU_DELETE_STATUS = #{EU_DELETE_STATUS,jdbcType=INTEGER},
+      </if>
+    </set>
+    where EU_USER_ID = #{EU_USER_ID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.easyui.pojo.User">
+    update easybuy_user
+    set EU_USER_NAME = #{EU_USER_NAME,jdbcType=VARCHAR},
+      EU_PASSWORD = #{EU_PASSWORD,jdbcType=VARCHAR},
+      EU_SEX = #{EU_SEX,jdbcType=VARCHAR},
+      EU_BIRTHDAY = #{EU_BIRTHDAY,jdbcType=DATE},
+      EU_IDENTITY_CODE = #{EU_IDENTITY_CODE,jdbcType=VARCHAR},
+      EU_EMAIL = #{EU_EMAIL,jdbcType=VARCHAR},
+      EU_MOBILE = #{EU_MOBILE,jdbcType=VARCHAR},
+      EU_ADDRESS = #{EU_ADDRESS,jdbcType=VARCHAR},
+      EU_STATUS = #{EU_STATUS,jdbcType=INTEGER},
+      EU_DELETE_STATUS = #{EU_DELETE_STATUS,jdbcType=INTEGER}
+    where EU_USER_ID = #{EU_USER_ID,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyui.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.easyui.pojo.Order">
+    <id column="EO_ID" jdbcType="INTEGER" property="eoId" />
+    <result column="EO_USER_ID" jdbcType="VARCHAR" property="eoUserId" />
+    <result column="EO_USER_NAME" jdbcType="VARCHAR" property="eoUserName" />
+    <result column="EO_USER_ADDRESS" jdbcType="VARCHAR" property="eoUserAddress" />
+    <result column="EO_CREATE_TIME" jdbcType="DATE" property="eoCreateTime" />
+    <result column="EO_COST" jdbcType="DOUBLE" property="eoCost" />
+    <result column="EO_STATUS" jdbcType="INTEGER" property="eoStatus" />
+    <result column="EO_TYPE" jdbcType="INTEGER" property="eoType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EO_ID, EO_USER_ID, EO_USER_NAME, EO_USER_ADDRESS, EO_CREATE_TIME, EO_COST, EO_STATUS, 
+    EO_TYPE
+  </sql>
+  <select id="selectByExample" parameterType="com.easyui.pojo.OrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from easybuy_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from easybuy_order
+    where EO_ID = #{eoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from easybuy_order
+    where EO_ID = #{eoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.easyui.pojo.OrderExample">
+    delete from easybuy_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.easyui.pojo.Order">
+    insert into easybuy_order (EO_ID, EO_USER_ID, EO_USER_NAME, 
+      EO_USER_ADDRESS, EO_CREATE_TIME, EO_COST, 
+      EO_STATUS, EO_TYPE)
+    values (#{eoId,jdbcType=INTEGER}, #{eoUserId,jdbcType=VARCHAR}, #{eoUserName,jdbcType=VARCHAR}, 
+      #{eoUserAddress,jdbcType=VARCHAR}, #{eoCreateTime,jdbcType=DATE}, #{eoCost,jdbcType=DOUBLE}, 
+      #{eoStatus,jdbcType=INTEGER}, #{eoType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.easyui.pojo.Order">
+    insert into easybuy_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eoId != null">
+        EO_ID,
+      </if>
+      <if test="eoUserId != null">
+        EO_USER_ID,
+      </if>
+      <if test="eoUserName != null">
+        EO_USER_NAME,
+      </if>
+      <if test="eoUserAddress != null">
+        EO_USER_ADDRESS,
+      </if>
+      <if test="eoCreateTime != null">
+        EO_CREATE_TIME,
+      </if>
+      <if test="eoCost != null">
+        EO_COST,
+      </if>
+      <if test="eoStatus != null">
+        EO_STATUS,
+      </if>
+      <if test="eoType != null">
+        EO_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eoId != null">
+        #{eoId,jdbcType=INTEGER},
+      </if>
+      <if test="eoUserId != null">
+        #{eoUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="eoUserName != null">
+        #{eoUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="eoUserAddress != null">
+        #{eoUserAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="eoCreateTime != null">
+        #{eoCreateTime,jdbcType=DATE},
+      </if>
+      <if test="eoCost != null">
+        #{eoCost,jdbcType=DOUBLE},
+      </if>
+      <if test="eoStatus != null">
+        #{eoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eoType != null">
+        #{eoType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.easyui.pojo.OrderExample" resultType="java.lang.Long">
+    select count(*) from easybuy_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update easybuy_order
+    <set>
+      <if test="record.eoId != null">
+        EO_ID = #{record.eoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eoUserId != null">
+        EO_USER_ID = #{record.eoUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eoUserName != null">
+        EO_USER_NAME = #{record.eoUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eoUserAddress != null">
+        EO_USER_ADDRESS = #{record.eoUserAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eoCreateTime != null">
+        EO_CREATE_TIME = #{record.eoCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.eoCost != null">
+        EO_COST = #{record.eoCost,jdbcType=DOUBLE},
+      </if>
+      <if test="record.eoStatus != null">
+        EO_STATUS = #{record.eoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.eoType != null">
+        EO_TYPE = #{record.eoType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update easybuy_order
+    set EO_ID = #{record.eoId,jdbcType=INTEGER},
+      EO_USER_ID = #{record.eoUserId,jdbcType=VARCHAR},
+      EO_USER_NAME = #{record.eoUserName,jdbcType=VARCHAR},
+      EO_USER_ADDRESS = #{record.eoUserAddress,jdbcType=VARCHAR},
+      EO_CREATE_TIME = #{record.eoCreateTime,jdbcType=DATE},
+      EO_COST = #{record.eoCost,jdbcType=DOUBLE},
+      EO_STATUS = #{record.eoStatus,jdbcType=INTEGER},
+      EO_TYPE = #{record.eoType,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.easyui.pojo.Order">
+    update easybuy_order
+    <set>
+      <if test="eoUserId != null">
+        EO_USER_ID = #{eoUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="eoUserName != null">
+        EO_USER_NAME = #{eoUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="eoUserAddress != null">
+        EO_USER_ADDRESS = #{eoUserAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="eoCreateTime != null">
+        EO_CREATE_TIME = #{eoCreateTime,jdbcType=DATE},
+      </if>
+      <if test="eoCost != null">
+        EO_COST = #{eoCost,jdbcType=DOUBLE},
+      </if>
+      <if test="eoStatus != null">
+        EO_STATUS = #{eoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eoType != null">
+        EO_TYPE = #{eoType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where EO_ID = #{eoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.easyui.pojo.Order">
+    update easybuy_order
+    set EO_USER_ID = #{eoUserId,jdbcType=VARCHAR},
+      EO_USER_NAME = #{eoUserName,jdbcType=VARCHAR},
+      EO_USER_ADDRESS = #{eoUserAddress,jdbcType=VARCHAR},
+      EO_CREATE_TIME = #{eoCreateTime,jdbcType=DATE},
+      EO_COST = #{eoCost,jdbcType=DOUBLE},
+      EO_STATUS = #{eoStatus,jdbcType=INTEGER},
+      EO_TYPE = #{eoType,jdbcType=INTEGER}
+    where EO_ID = #{eoId,jdbcType=INTEGER}
+  </update>
+</mapper>

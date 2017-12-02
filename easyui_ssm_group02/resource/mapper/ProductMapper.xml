@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyui.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.easyui.pojo.Product">
+    <id column="EP_ID" jdbcType="INTEGER" property="epId" />
+    <result column="EP_NAME" jdbcType="VARCHAR" property="epName" />
+    <result column="EP_DESCRIPTION" jdbcType="VARCHAR" property="epDescription" />
+    <result column="EP_PRICE" jdbcType="DOUBLE" property="epPrice" />
+    <result column="EP_STOCK" jdbcType="INTEGER" property="epStock" />
+    <result column="EPC_ID" jdbcType="INTEGER" property="epcId" />
+    <result column="EPC_CHILD_ID" jdbcType="INTEGER" property="epcChildId" />
+    <result column="EP_FILE_NAME" jdbcType="VARCHAR" property="epFileName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EP_ID, EP_NAME, EP_DESCRIPTION, EP_PRICE, EP_STOCK, EPC_ID, EPC_CHILD_ID, EP_FILE_NAME
+  </sql>
+  <select id="selectByExample" parameterType="com.easyui.pojo.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from easybuy_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from easybuy_product
+    where EP_ID = #{epId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from easybuy_product
+    where EP_ID = #{epId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.easyui.pojo.ProductExample">
+    delete from easybuy_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.easyui.pojo.Product">
+    insert into easybuy_product (EP_ID, EP_NAME, EP_DESCRIPTION, 
+      EP_PRICE, EP_STOCK, EPC_ID, 
+      EPC_CHILD_ID, EP_FILE_NAME)
+    values (#{epId,jdbcType=INTEGER}, #{epName,jdbcType=VARCHAR}, #{epDescription,jdbcType=VARCHAR}, 
+      #{epPrice,jdbcType=DOUBLE}, #{epStock,jdbcType=INTEGER}, #{epcId,jdbcType=INTEGER}, 
+      #{epcChildId,jdbcType=INTEGER}, #{epFileName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.easyui.pojo.Product">
+    insert into easybuy_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="epId != null">
+        EP_ID,
+      </if>
+      <if test="epName != null">
+        EP_NAME,
+      </if>
+      <if test="epDescription != null">
+        EP_DESCRIPTION,
+      </if>
+      <if test="epPrice != null">
+        EP_PRICE,
+      </if>
+      <if test="epStock != null">
+        EP_STOCK,
+      </if>
+      <if test="epcId != null">
+        EPC_ID,
+      </if>
+      <if test="epcChildId != null">
+        EPC_CHILD_ID,
+      </if>
+      <if test="epFileName != null">
+        EP_FILE_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="epId != null">
+        #{epId,jdbcType=INTEGER},
+      </if>
+      <if test="epName != null">
+        #{epName,jdbcType=VARCHAR},
+      </if>
+      <if test="epDescription != null">
+        #{epDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="epPrice != null">
+        #{epPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="epStock != null">
+        #{epStock,jdbcType=INTEGER},
+      </if>
+      <if test="epcId != null">
+        #{epcId,jdbcType=INTEGER},
+      </if>
+      <if test="epcChildId != null">
+        #{epcChildId,jdbcType=INTEGER},
+      </if>
+      <if test="epFileName != null">
+        #{epFileName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.easyui.pojo.ProductExample" resultType="java.lang.Long">
+    select count(*) from easybuy_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update easybuy_product
+    <set>
+      <if test="record.epId != null">
+        EP_ID = #{record.epId,jdbcType=INTEGER},
+      </if>
+      <if test="record.epName != null">
+        EP_NAME = #{record.epName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.epDescription != null">
+        EP_DESCRIPTION = #{record.epDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.epPrice != null">
+        EP_PRICE = #{record.epPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.epStock != null">
+        EP_STOCK = #{record.epStock,jdbcType=INTEGER},
+      </if>
+      <if test="record.epcId != null">
+        EPC_ID = #{record.epcId,jdbcType=INTEGER},
+      </if>
+      <if test="record.epcChildId != null">
+        EPC_CHILD_ID = #{record.epcChildId,jdbcType=INTEGER},
+      </if>
+      <if test="record.epFileName != null">
+        EP_FILE_NAME = #{record.epFileName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update easybuy_product
+    set EP_ID = #{record.epId,jdbcType=INTEGER},
+      EP_NAME = #{record.epName,jdbcType=VARCHAR},
+      EP_DESCRIPTION = #{record.epDescription,jdbcType=VARCHAR},
+      EP_PRICE = #{record.epPrice,jdbcType=DOUBLE},
+      EP_STOCK = #{record.epStock,jdbcType=INTEGER},
+      EPC_ID = #{record.epcId,jdbcType=INTEGER},
+      EPC_CHILD_ID = #{record.epcChildId,jdbcType=INTEGER},
+      EP_FILE_NAME = #{record.epFileName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.easyui.pojo.Product">
+    update easybuy_product
+    <set>
+      <if test="epName != null">
+        EP_NAME = #{epName,jdbcType=VARCHAR},
+      </if>
+      <if test="epDescription != null">
+        EP_DESCRIPTION = #{epDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="epPrice != null">
+        EP_PRICE = #{epPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="epStock != null">
+        EP_STOCK = #{epStock,jdbcType=INTEGER},
+      </if>
+      <if test="epcId != null">
+        EPC_ID = #{epcId,jdbcType=INTEGER},
+      </if>
+      <if test="epcChildId != null">
+        EPC_CHILD_ID = #{epcChildId,jdbcType=INTEGER},
+      </if>
+      <if test="epFileName != null">
+        EP_FILE_NAME = #{epFileName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EP_ID = #{epId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.easyui.pojo.Product">
+    update easybuy_product
+    set EP_NAME = #{epName,jdbcType=VARCHAR},
+      EP_DESCRIPTION = #{epDescription,jdbcType=VARCHAR},
+      EP_PRICE = #{epPrice,jdbcType=DOUBLE},
+      EP_STOCK = #{epStock,jdbcType=INTEGER},
+      EPC_ID = #{epcId,jdbcType=INTEGER},
+      EPC_CHILD_ID = #{epcChildId,jdbcType=INTEGER},
+      EP_FILE_NAME = #{epFileName,jdbcType=VARCHAR}
+    where EP_ID = #{epId,jdbcType=INTEGER}
+  </update>
+</mapper>

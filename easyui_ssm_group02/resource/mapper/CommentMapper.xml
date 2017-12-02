@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyui.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.easyui.pojo.Comment">
+    <id column="EC_ID" jdbcType="INTEGER" property="ecId" />
+    <result column="EC_CONTENT" jdbcType="VARCHAR" property="ecContent" />
+    <result column="EC_CREATE_TIME" jdbcType="DATE" property="ecCreateTime" />
+    <result column="EC_REPLY" jdbcType="VARCHAR" property="ecReply" />
+    <result column="EC_REPLY_TIME" jdbcType="DATE" property="ecReplyTime" />
+    <result column="EC_NICK_NAME" jdbcType="VARCHAR" property="ecNickName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    EC_ID, EC_CONTENT, EC_CREATE_TIME, EC_REPLY, EC_REPLY_TIME, EC_NICK_NAME
+  </sql>
+  <select id="selectByExample" parameterType="com.easyui.pojo.CommentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from easybuy_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from easybuy_comment
+    where EC_ID = #{ecId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from easybuy_comment
+    where EC_ID = #{ecId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.easyui.pojo.CommentExample">
+    delete from easybuy_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.easyui.pojo.Comment">
+    insert into easybuy_comment (EC_ID, EC_CONTENT, EC_CREATE_TIME, 
+      EC_REPLY, EC_REPLY_TIME, EC_NICK_NAME
+      )
+    values (#{ecId,jdbcType=INTEGER}, #{ecContent,jdbcType=VARCHAR}, #{ecCreateTime,jdbcType=DATE}, 
+      #{ecReply,jdbcType=VARCHAR}, #{ecReplyTime,jdbcType=DATE}, #{ecNickName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.easyui.pojo.Comment">
+    insert into easybuy_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ecId != null">
+        EC_ID,
+      </if>
+      <if test="ecContent != null">
+        EC_CONTENT,
+      </if>
+      <if test="ecCreateTime != null">
+        EC_CREATE_TIME,
+      </if>
+      <if test="ecReply != null">
+        EC_REPLY,
+      </if>
+      <if test="ecReplyTime != null">
+        EC_REPLY_TIME,
+      </if>
+      <if test="ecNickName != null">
+        EC_NICK_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ecId != null">
+        #{ecId,jdbcType=INTEGER},
+      </if>
+      <if test="ecContent != null">
+        #{ecContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ecCreateTime != null">
+        #{ecCreateTime,jdbcType=DATE},
+      </if>
+      <if test="ecReply != null">
+        #{ecReply,jdbcType=VARCHAR},
+      </if>
+      <if test="ecReplyTime != null">
+        #{ecReplyTime,jdbcType=DATE},
+      </if>
+      <if test="ecNickName != null">
+        #{ecNickName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.easyui.pojo.CommentExample" resultType="java.lang.Long">
+    select count(*) from easybuy_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update easybuy_comment
+    <set>
+      <if test="record.ecId != null">
+        EC_ID = #{record.ecId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ecContent != null">
+        EC_CONTENT = #{record.ecContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ecCreateTime != null">
+        EC_CREATE_TIME = #{record.ecCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.ecReply != null">
+        EC_REPLY = #{record.ecReply,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ecReplyTime != null">
+        EC_REPLY_TIME = #{record.ecReplyTime,jdbcType=DATE},
+      </if>
+      <if test="record.ecNickName != null">
+        EC_NICK_NAME = #{record.ecNickName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update easybuy_comment
+    set EC_ID = #{record.ecId,jdbcType=INTEGER},
+      EC_CONTENT = #{record.ecContent,jdbcType=VARCHAR},
+      EC_CREATE_TIME = #{record.ecCreateTime,jdbcType=DATE},
+      EC_REPLY = #{record.ecReply,jdbcType=VARCHAR},
+      EC_REPLY_TIME = #{record.ecReplyTime,jdbcType=DATE},
+      EC_NICK_NAME = #{record.ecNickName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.easyui.pojo.Comment">
+    update easybuy_comment
+    <set>
+      <if test="ecContent != null">
+        EC_CONTENT = #{ecContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ecCreateTime != null">
+        EC_CREATE_TIME = #{ecCreateTime,jdbcType=DATE},
+      </if>
+      <if test="ecReply != null">
+        EC_REPLY = #{ecReply,jdbcType=VARCHAR},
+      </if>
+      <if test="ecReplyTime != null">
+        EC_REPLY_TIME = #{ecReplyTime,jdbcType=DATE},
+      </if>
+      <if test="ecNickName != null">
+        EC_NICK_NAME = #{ecNickName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EC_ID = #{ecId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.easyui.pojo.Comment">
+    update easybuy_comment
+    set EC_CONTENT = #{ecContent,jdbcType=VARCHAR},
+      EC_CREATE_TIME = #{ecCreateTime,jdbcType=DATE},
+      EC_REPLY = #{ecReply,jdbcType=VARCHAR},
+      EC_REPLY_TIME = #{ecReplyTime,jdbcType=DATE},
+      EC_NICK_NAME = #{ecNickName,jdbcType=VARCHAR}
+    where EC_ID = #{ecId,jdbcType=INTEGER}
+  </update>
+</mapper>
